@@ -4,9 +4,7 @@ import http from 'http';
 import cors from 'cors';
 
 const app = express();
-app.use(cors({
-    origin: "http://localhost:3000"
-}))
+app.use(cors())
 const server = http.createServer(app);
 
 app.get('/', (req, res) => {
@@ -14,17 +12,26 @@ app.get('/', (req, res) => {
 });
 
 
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+    },
+});
 
 io.on('connection', (socket: any) => {
+
     socket.broadcast.emit('Hello');
-    console.log("Connected");
+    console.log("Connected...");
+
     socket.on('disconnect', () => {
         console.log(`user disconnected`);
     });
+
     socket.on('chat message', (msg: String) => {
         io.emit('chat message', msg);
     });
+
     socket.on('foo', (msg: String) => {
         io.emit('foo', msg);
     })
