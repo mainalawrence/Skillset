@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const socket_io_1 = require("socket.io");
+const socket_io_1 = require("socket.io"); //🦋p
 const http_1 = __importDefault(require("http"));
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
@@ -30,6 +30,9 @@ io.on('connection', (socket) => {
     });
     socket.on('foo', (msg) => {
         io.emit('foo', msg);
+    });
+    socket.on('Notifications', () => {
+        socket.to("jane").emit("hello jane");
     });
 });
 server.listen(4000, () => {

@@ -1,5 +1,5 @@
 import express from 'express';
-import { Server, Socket } from "socket.io";
+import { Server, Socket } from "socket.io";//🦋p
 import http from 'http';
 import cors from 'cors';
 
@@ -19,7 +19,7 @@ const io = new Server(server, {
     },
 });
 
-io.on('connection', (socket: any) => {
+io.on('connection', (socket) => {
 
     socket.broadcast.emit('Hello');
     console.log("Connected...");
@@ -35,6 +35,9 @@ io.on('connection', (socket: any) => {
     socket.on('foo', (msg: String) => {
         io.emit('foo', msg);
     })
+   socket.on('Notifications',()=>{
+       socket.to("jane").emit("hello jane")
+   })
 
 })
 
